@@ -18,19 +18,8 @@ depends_on = None
 
 
 def upgrade():
-    op.create_table(
-        "users",
-        sa.Column("id", UUIDType(binary=False), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("username", sa.String(255), nullable=False),
-        sa.Column("password", sa.String(255), nullable=False),
-        sa.PrimaryKeyConstraint("id", name=op.f("pk_users")),
-        sa.UniqueConstraint("username", name=op.f("uq_users_username")),
-    )
-    op.create_index(op.f("ix_users_created_at"), "users", ["created_at"], unique=False)
+    pass
 
 
 def downgrade():
-    op.drop_index(op.f("ix_users_created_at"), table_name="users")
-    op.drop_table("users")
+    pass

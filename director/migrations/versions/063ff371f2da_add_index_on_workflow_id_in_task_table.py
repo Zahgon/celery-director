@@ -17,10 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.create_index(
-        op.f("ix_tasks_workflow_id"), "tasks", ["workflow_id"], unique=False
-    )
+    pass
 
 
 def downgrade():
-    op.drop_index(op.f("ix_tasks_workflow_id"), table_name="tasks")
+    pass

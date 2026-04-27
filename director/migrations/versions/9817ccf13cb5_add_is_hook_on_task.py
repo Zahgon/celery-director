@@ -17,8 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column("tasks", sa.Column("is_hook", sa.Boolean(), nullable=True))
+    pass
 
 
 def downgrade():
-    op.drop_column("tasks", "is_hook")
+    pass

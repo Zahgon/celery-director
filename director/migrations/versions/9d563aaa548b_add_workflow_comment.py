@@ -17,11 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column(
-        "workflows",
-        sa.Column("comment", sa.String(255), nullable=True),
-    )
+    pass
 
 
 def downgrade():
-    op.drop_column("workflows", "comment")
+    pass

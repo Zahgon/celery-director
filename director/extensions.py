@@ -132,29 +132,10 @@ class DirectorSentry:
             )
 
     def enrich_tags(self, tags, workflow_id, task):
-        from director.models.workflows import Workflow
-
-        with self.app.app_context():
-            workflow_obj = Workflow.query.filter_by(id=workflow_id).first()
-            workflow = {
-                "id": str(workflow_obj.id),
-                "project": workflow_obj.project,
-                "name": str(workflow_obj),
-            }
-
-        tags.update(
-            {
-                "celery_task_name": task.name,
-                "director_workflow_id": workflow.get("id"),
-                "director_workflow_project": workflow.get("project"),
-                "director_workflow_name": workflow.get("name"),
-            }
-        )
-        return tags
+        pass
 
     def enrich_extra(self, extra, args, kwargs):
-        extra.update({"workflow-payload": kwargs["payload"], "task-args": args})
-        return extra
+        pass
 
     def custom_event_processor(self, task, uuid, args, kwargs, request=None):
         """
@@ -164,35 +145,7 @@ class DirectorSentry:
         Published under a BSD-2 license and available at:
         https://github.com/getsentry/sentry-python/blob/0.16.3/sentry_sdk/integrations/celery.py#L176
         """
-
-        def event_processor(event, hint):
-            with capture_internal_exceptions():
-                tags = event.setdefault("tags", {})
-                tags["celery_task_id"] = uuid
-                extra = event.setdefault("extra", {})
-                extra["celery-job"] = {
-                    "task_name": task.name,
-                    "args": args,
-                    "kwargs": kwargs,
-                }
-
-                # Director custom fields (references are used by Sentry,
-                # no need to retrieve the new values)
-                self.enrich_tags(tags, kwargs["workflow_id"], task)
-                self.enrich_extra(extra, args, kwargs)
-
-            if "exc_info" in hint:
-                with capture_internal_exceptions():
-                    if issubclass(hint["exc_info"][0], SoftTimeLimitExceeded):
-                        event["fingerprint"] = [
-                            "celery",
-                            "SoftTimeLimitExceeded",
-                            getattr(task, "name", task),
-                        ]
-
-            return event
-
-        return event_processor
+        pass
 
 
 # List of extensions

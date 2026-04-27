@@ -26,28 +26,10 @@ def build_celery_schedule(workflow_name, data):
     """A celery schedule can accept seconds or crontab"""
 
     def _handle_schedule(schedule):
-        try:
-            value = float(schedule)
-        except ValueError:
-            m, h, dw, dm, my = schedule.split(" ")
-            value = crontab(
-                minute=m,
-                hour=h,
-                day_of_month=dm,
-                month_of_year=my,
-                day_of_week=dw,
-            )
-        return value
+        pass
 
     def _handle_crontab(ct):
-        m, h, dm, my, dw = ct.split(" ")
-        return crontab(
-            minute=m,
-            hour=h,
-            day_of_month=dm,
-            month_of_year=my,
-            day_of_week=dw,
-        )
+        pass
 
     excluded_keys = ["payload"]
     keys = [k for k in data.keys() if k not in excluded_keys]

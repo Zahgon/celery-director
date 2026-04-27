@@ -10,6 +10,4 @@ except ImportError:
 
 class JSONBType(JSONType):
     def load_dialect_impl(self, dialect):
-        if dialect.name == "postgresql" and has_postgres_jsonb:
-            return dialect.type_descriptor(JSONB())
-        return super(JSONBType, self).load_dialect_impl(dialect)
+        pass

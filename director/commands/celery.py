@@ -16,19 +16,7 @@ def celery():
 @click.argument("beat_args", nargs=-1, type=click.UNPROCESSED)
 def beat(dev_mode, beat_args):
     """Start the beat instance"""
-    args = [
-        "celery",
-        "-A",
-        "director._auto:cel",
-        "beat",
-    ]
-    if dev_mode:
-        args += [
-            "--loglevel",
-            "INFO",
-        ]
-    args += list(beat_args)
-    os.execvp(args[0], args)
+    pass
 
 
 @celery.command("worker", context_settings=dict(ignore_unknown_options=True))
@@ -56,7 +44,4 @@ def worker(dev_mode, worker_args):
 @pass_ctx
 def flower(ctx, flower_args):
     """Start the flower instance"""
-    broker = ctx.app.config["CELERY_CONF"]["broker_url"]
-    args = ["celery", "-b", broker, "flower"]
-    args += list(flower_args)
-    os.execvp(args[0], args)
+    pass

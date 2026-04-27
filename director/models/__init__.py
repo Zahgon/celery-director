@@ -7,7 +7,7 @@ from director.extensions import db
 
 
 def get_uuid():
-    return str(uuid.uuid4())
+    pass
 
 
 class StatusType(enum.Enum):

@@ -13,13 +13,7 @@ logger = get_task_logger(__name__)
 
 @task_prerun.connect
 def director_prerun(task_id, task, *args, **kwargs):
-    if task.name.startswith("director.tasks"):
-        return
-
-    with cel.app.app_context():
-        task = Task.query.filter_by(id=task_id).first()
-        task.status = StatusType.progress
-        task.save()
+    pass
 
 
 @task_postrun.connect
@@ -28,25 +22,12 @@ def close_session(*args, **kwargs):
     # a scoped session factory, given that we are maintaining the same app
     # context, this ensures tasks have a fresh session (e.g. session errors
     # won't propagate across tasks)
-    db.session.remove()
+    pass
 
 
 class BaseTask(_Task):
     def on_failure(self, exc, task_id, args, kwargs, einfo):
-        task = Task.query.filter_by(id=task_id).first()
-        task.status = StatusType.error
-        task.result = {"exception": str(exc), "traceback": einfo.traceback}
-        task.workflow.status = StatusType.error
-        task.save()
-
-        logger.info(f"Task {task_id} is now in error")
-        super(BaseTask, self).on_failure(exc, task_id, args, kwargs, einfo)
+        pass
 
     def on_success(self, retval, task_id, args, kwargs):
-        task = Task.query.filter_by(id=task_id).first()
-        task.status = StatusType.success
-        task.result = retval
-        task.save()
-
-        logger.info(f"Task {task_id} is now in success")
-        super(BaseTask, self).on_success(retval, task_id, args, kwargs)
+        pass

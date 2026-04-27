@@ -20,56 +20,8 @@ depends_on = None
 
 
 def upgrade():
-    op.create_table(
-        "workflows",
-        sa.Column("id", UUIDType(binary=False), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("name", sa.String(255), nullable=False),
-        sa.Column("project", sa.String(255), nullable=False),
-        sa.Column(
-            "status",
-            sa.Enum(
-                "pending", "progress", "success", "error", "canceled", name="statustype"
-            ),
-            nullable=False,
-        ),
-        sa.Column("payload", JSONBType(), nullable=True),
-        sa.Column("periodic", sa.Boolean(), nullable=True),
-        sa.PrimaryKeyConstraint("id", name=op.f("pk_workflows")),
-    )
-    op.create_index(
-        op.f("ix_workflows_created_at"), "workflows", ["created_at"], unique=False
-    )
-
-    op.create_table(
-        "tasks",
-        sa.Column("id", UUIDType(binary=False), nullable=False),
-        sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
-        sa.Column("key", sa.String(255), nullable=False),
-        sa.Column(
-            "status",
-            sa.Enum(
-                "pending", "progress", "success", "error", "canceled", name="statustype"
-            ),
-            nullable=False,
-        ),
-        sa.Column("previous", JSONBType(), nullable=True),
-        sa.Column("workflow_id", UUIDType(binary=False), nullable=False),
-        sa.ForeignKeyConstraint(
-            ["workflow_id"],
-            ["workflows.id"],
-            name=op.f("fk_tasks_workflow_id_workflows"),
-        ),
-        sa.PrimaryKeyConstraint("id", name=op.f("pk_tasks")),
-    )
-    op.create_index(op.f("ix_tasks_created_at"), "tasks", ["created_at"], unique=False)
+    pass
 
 
 def downgrade():
-    op.drop_index(op.f("ix_tasks_created_at"), table_name="tasks")
-    op.drop_table("tasks")
-    op.drop_index(op.f("ix_workflows_created_at"), table_name="workflows")
-    op.drop_table("workflows")
-    sa.Enum(name="statustype").drop(op.get_bind())
+    pass

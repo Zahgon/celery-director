@@ -18,7 +18,7 @@ logger = get_task_logger(__name__)
 def ping():
     # type: () -> str
     """Simple task that just returns 'pong'."""
-    return "pong"
+    pass
 
 
 @cel.task()
@@ -45,11 +45,7 @@ def end(workflow_id):
 
 @cel.task()
 def mark_as_canceled_pending_tasks(workflow_id):
-    logger.info(f"Mark as cancelled pending tasks of the workflow {workflow_id}")
-    tasks = Task.query.filter_by(workflow_id=workflow_id, status=StatusType.pending)
-    for task in tasks:
-        task.status = StatusType.canceled
-        task.save()
+    pass
 
 
 @cel.task()

@@ -17,8 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column("tasks", sa.Column("result", sa.PickleType(), nullable=True))
+    pass
 
 
 def downgrade():
-    op.drop_column("tasks", "result")
+    pass
