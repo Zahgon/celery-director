@@ -19,20 +19,10 @@ class User(BaseModel):
         return f"<User {self.username}>"
 
     def update(self):
-        user = self.query.filter_by(username=self.username).first()
-        if not user:
-            raise UserNotFound(f"User {self.username} not found")
-
-        user.password = self.password
-
-        self.commit()
+        pass
 
     def delete(self):
-        db.session.delete(self)
-
-        self.commit()
+        pass
 
     def to_dict(self):
-        d = super().to_dict()
-        d.update({"username": self.username, "password": self.password})
-        return d
+        pass

@@ -85,12 +85,7 @@ class UserConfig(dict):
     """Handle the user configuration"""
 
     def init(self):
-        envs = {
-            k.split("DIRECTOR_")[1]: v
-            for k, v in os.environ.items()
-            if k.startswith("DIRECTOR_") and k not in HIDDEN_CONFIG
-        }
-        super().__init__(**envs)
+        pass
 
     def __getattr__(self, attr):
         try:

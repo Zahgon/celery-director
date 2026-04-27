@@ -24,82 +24,31 @@ class CeleryWorkflow:
         self.workflows = None
 
     def init_app(self, app):
-        self.app = app
-        self.path = Path(self.app.config["DIRECTOR_HOME"]).resolve() / "workflows.yml"
-        with open(self.path) as f:
-            self.workflows = yaml.load(f, Loader=yaml.SafeLoader)
-
-        self.import_user_tasks()
-        self.read_schemas()
+        pass
 
     def get_by_name(self, name):
-        workflow = self.workflows.get(name)
-        if not workflow:
-            raise WorkflowNotFound(f"Workflow {name} not found")
-        return workflow
+        pass
 
     def get_tasks(self, name):
-        return self.get_by_name(name)["tasks"]
+        pass
 
     def get_hook_task(self, name, hook_name):
-        if (
-            "hooks" in self.get_by_name(name)
-            and hook_name in self.get_by_name(name)["hooks"]
-        ):
-            return self.get_by_name(name)["hooks"][hook_name]
-        return None
+        pass
 
     def get_failure_hook_task(self, name):
-        return self.get_hook_task(name, "failure")
+        pass
 
     def get_success_hook_task(self, name):
-        return self.get_hook_task(name, "success")
+        pass
 
     def get_queue(self, name):
-        try:
-            return self.get_by_name(name)["queue"]
-        except KeyError:
-            return "celery"
+        pass
 
     def import_user_tasks(self):
-        self.plugin_base = PluginBase(package="director.foobar")
-
-        folder = Path(self.app.config["DIRECTOR_HOME"]).resolve()
-        self.plugin_source = self.plugin_base.make_plugin_source(
-            searchpath=[str(folder)]
-        )
-
-        tasks = Path(folder / "tasks").glob("**/*.py")
-        with self.plugin_source:
-            for task in tasks:
-                if task.stem == "__init__":
-                    continue
-
-                name = str(task.relative_to(folder))[:-3].replace("/", ".")
-                __import__(
-                    self.plugin_source.base.package + "." + name,
-                    globals(),
-                    {},
-                    ["__name__"],
-                )
+        pass
 
     def read_schemas(self):
-        folder = Path(self.app.config["DIRECTOR_HOME"]).resolve()
-
-        for name, conf in self.workflows.items():
-            if "schema" in conf:
-                path = Path(folder / "schemas" / f"{conf['schema']}.json")
-
-                try:
-                    schema = json.loads(open(path).read())
-                except FileNotFoundError:
-                    raise SchemaNotFound(
-                        f"Schema '{conf['schema']}' not found ({path})"
-                    )
-                except JSONDecodeError as e:
-                    raise SchemaNotValid(f"Schema '{conf['schema']}' not valid ({e})")
-
-                self.workflows[name]["schema"] = schema
+        pass
 
 
 # Celery Extension
@@ -112,8 +61,7 @@ class FlaskCelery(Celery):
             self.init_app(kwargs["app"])
 
     def init_app(self, app):
-        self.app = app
-        self.conf.update(app.config.get("CELERY_CONF", {}))
+        pass
 
 
 # Sentry Extension
@@ -122,14 +70,7 @@ class DirectorSentry:
         self.app = None
 
     def init_app(self, app):
-        self.app = app
-
-        if self.app.config["SENTRY_DSN"]:
-            sentry_celery._make_event_processor = self.custom_event_processor
-            sentry_sdk.init(
-                dsn=self.app.config["SENTRY_DSN"],
-                integrations=[sentry_celery.CeleryIntegration()],
-            )
+        pass
 
     def enrich_tags(self, tags, workflow_id, task):
         pass

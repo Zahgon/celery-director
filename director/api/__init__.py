@@ -10,9 +10,9 @@ api_bp = Blueprint("api", __name__, url_prefix="/api")
 
 @api_bp.errorhandler(JsonValidationError)
 def schema_exception_handler(e):
-    pass
+    return jsonify(format_schema_errors(e)), 400
 
 
 @api_bp.route("/ping")
 def ping():
-    pass
+    return jsonify({"message": "pong"})

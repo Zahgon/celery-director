@@ -78,43 +78,11 @@ def compute_sri_hash(filename, block_size=4096):
     :param block_size: size of the block for reading binary data
     :return: a base64-encoded hash
     """
-    sha256_hash = hashlib.sha256()
-    with open(filename, "rb") as f:
-        for block in iter(lambda: f.read(block_size), b""):
-            sha256_hash.update(block)
-        b64_encoded_str = base64.b64encode(sha256_hash.digest())
-        return b64_encoded_str.decode()
+    pass
 
 
 @click.command()
 @pass_ctx
 def dlassets(ctx):
     """Download the required static assets"""
-    static_path = Path(ctx.app.config["STATIC_FOLDER"])
-
-    if static_path == Path(ctx.app.config["DIRECTOR_HOME"]) / "static":
-        Path(static_path).mkdir(parents=True, exist_ok=True)
-
-    for (dep_url, dep_hash, dep_custom_path) in DEPENDENCIES:
-        # Get the name of the output file
-        _, dep_filename = dep_url.rsplit("/", 1)
-
-        if not dep_custom_path:
-            path = static_path / dep_filename
-        else:
-            path = static_path / dep_custom_path / dep_filename
-            Path(static_path / dep_custom_path).mkdir(parents=True, exist_ok=True)
-
-        click.echo(f"Downloading {dep_filename} in {path}")
-
-        # Download the file from the CDN
-        try:
-            urlretrieve(dep_url, str(path))
-        except Exception as err:
-            click.echo(click.style(f"The command encountered an error {err}", fg="red"))
-            raise click.Abort()
-
-        # Remove the "shaXXX-" part
-        _, hash_value = dep_hash.split("-", 1)
-
-        assert compute_sri_hash(str(path)) == hash_value
+    pass

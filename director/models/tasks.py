@@ -32,15 +32,4 @@ class Task(BaseModel):
         return f"<Task {self.key}>"
 
     def to_dict(self):
-        d = super().to_dict()
-        d.update(
-            {
-                "key": self.key,
-                "status": self.status.value,
-                "task": self.id,
-                "previous": self.previous,
-                "result": self.result,
-                "is_hook": self.is_hook,
-            }
-        )
-        return d
+        pass

@@ -7,6 +7,4 @@ import click
 @click.argument("db_args", nargs=-1, type=click.UNPROCESSED)
 def db(db_args):
     """Manage the database"""
-    os.environ["FLASK_APP"] = "director._auto:app"
-    args = ["flask", "db"] + list(db_args)
-    os.execvpe(args[0], args, os.environ)
+    pass

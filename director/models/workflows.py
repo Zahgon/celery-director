@@ -20,18 +20,4 @@ class Workflow(BaseModel):
         return f"<Workflow {self.project}.{self.name}>"
 
     def to_dict(self, with_payload=True):
-        d = super().to_dict()
-        d.update(
-            {
-                "name": self.name,
-                "project": self.project,
-                "fullname": f"{self.project}.{self.name}",
-                "status": self.status.value,
-                "periodic": self.periodic,
-            }
-        )
-        if self.comment is not None:
-            d["comment"] = self.comment
-        if with_payload:
-            d["payload"] = self.payload
-        return d
+        pass

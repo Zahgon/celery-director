@@ -127,7 +127,7 @@ def create_app(
 
     @app.teardown_request
     def session_clear(exception=None):
-        pass
+        db.session.remove()
 
     return app
 

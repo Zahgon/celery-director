@@ -8,14 +8,24 @@ view_bp = Blueprint("views", __name__, url_prefix="/")
 
 @view_bp.route("/")
 def home():
-    pass
+    return render_template("index.html")
 
 
 @view_bp.route("/<id>")
 def get_workflow(id):
-    pass
+    try:
+        _ = UUID(id)
+    except ValueError:
+        abort(404)
+    return render_template("index.html")
 
 
 @view_bp.app_template_filter("status")
 def status(code):
-    pass
+    return {
+        "pending": "secondary",
+        "progress": "warning",
+        "success": "success",
+        "error": "danger",
+        "canceled": "dark",
+    }[code]

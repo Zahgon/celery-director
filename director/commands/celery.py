@@ -24,19 +24,7 @@ def beat(dev_mode, beat_args):
 @click.argument("worker_args", nargs=-1, type=click.UNPROCESSED)
 def worker(dev_mode, worker_args):
     """Start a Celery worker instance"""
-    args = [
-        "celery",
-        "-A",
-        "director._auto:cel",
-        "worker",
-    ]
-    if dev_mode:
-        args += [
-            "--loglevel",
-            "INFO",
-        ]
-    args += list(worker_args)
-    os.execvp(args[0], args)
+    pass
 
 
 @celery.command(name="flower", context_settings=dict(ignore_unknown_options=True))
