@@ -9,6 +9,7 @@ from director.context import pass_ctx
 @click.group()
 def celery():
     """Celery commands"""
+    pass
 
 
 @celery.command(name="beat", context_settings=dict(ignore_unknown_options=True))

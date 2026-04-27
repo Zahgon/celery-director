@@ -16,6 +16,7 @@ def _get_users():
 @click.group()
 def user():
     """Manage the users"""
+    pass
 
 
 @user.command(name="list")

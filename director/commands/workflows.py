@@ -21,6 +21,7 @@ def tasks_to_ascii(tasks, hooks):
 @click.group()
 def workflow():
     """Manage the workflows"""
+    pass
 
 
 @workflow.command(name="list")
